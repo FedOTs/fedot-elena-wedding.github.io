@@ -1603,146 +1603,128 @@ viewBox="0 0 21000 29700"
 
 
     /* ==================================
-       ФОТОБУДКА
+    ФОТОБУДКА
     ================================== */
-
     const leftPhotos = document.querySelectorAll(
-        ".booth-left .booth-photo"
+    ".booth-left .booth-photo"
     );
-
     const rightPhotos = document.querySelectorAll(
-        ".booth-right .booth-photo"
+    ".booth-right .booth-photo"
     );
-
     let leftIndex = 0;
     let rightIndex = 0;
-
     if (leftPhotos.length) {
-        leftPhotos[0].classList.add("active");
+    leftPhotos[0].classList.add("active");
     }
-
     if (rightPhotos.length) {
-        rightPhotos[0].classList.add("active");
+    rightPhotos[0].classList.add("active");
     }
-
-
     function nextPhoto(photos, index, direction) {
-
-        if (!photos.length) {
-            return index;
-        }
-
-        const current = photos[index];
-
-        current.classList.remove("active");
-
-        if (direction === "left") {
-            current.classList.add("exit-left");
-        } else {
-            current.classList.add("exit-right");
-        }
-
-
-        const nextIndex =
-            (index + 1) % photos.length;
-
-        const next =
-            photos[nextIndex];
-
-
-        setTimeout(() => {
-
-            current.classList.remove(
-                "exit-left",
-                "exit-right"
-            );
-
-            next.classList.remove(
-                "exit-left",
-                "exit-right"
-            );
-
-            next.classList.add("active");
-
-        }, 90);
-
-
-        return nextIndex;
+    if (!photos.length) {
+    return index;
     }
-
-
+    const current = photos[index];
+    current.classList.remove("active");
+    if (direction === "left") {
+    current.classList.add("exit-left");
+    } else {
+    current.classList.add("exit-right");
+    }
+    const nextIndex =
+    (index + 1) % photos.length;
+    const next =
+    photos[nextIndex];
+    setTimeout(() => {
+    current.classList.remove(
+    "exit-left",
+    "exit-right"
+    );
+    next.classList.remove(
+    "exit-left",
+    "exit-right"
+    );
+    next.classList.add("active");
+    }, 90);
+    return nextIndex;
+    }
     let lastScrollY = window.scrollY;
     let photoScrollLocked = false;
-
-
+    /*
+    * Определяем сенсорное устройство.
+    * На телефоне одно фото меняется
+    * ровно за один свайп.
+    */
+    const isTouchDevice =
+    "ontouchstart" in window ||
+    navigator.maxTouchPoints > 0;
+    let touchSwapAllowed = true;
+    if (isTouchDevice) {
     window.addEventListener(
-        "scroll",
-        () => {
-
-            const currentScrollY =
-                window.scrollY;
-
-            const delta =
-                currentScrollY - lastScrollY;
-
-
-            if (
-                Math.abs(delta) < 250 ||
-                photoScrollLocked
-            ) {
-                return;
-            }
-
-
-            photoScrollLocked = true;
-
-
-            if (delta > 0) {
-
-                leftIndex =
-                    nextPhoto(
-                        leftPhotos,
-                        leftIndex,
-                        "left"
-                    );
-
-                rightIndex =
-                    nextPhoto(
-                        rightPhotos,
-                        rightIndex,
-                        "right"
-                    );
-
-            } else {
-
-                leftIndex =
-                    nextPhoto(
-                        leftPhotos,
-                        leftIndex,
-                        "right"
-                    );
-
-                rightIndex =
-                    nextPhoto(
-                        rightPhotos,
-                        rightIndex,
-                        "left"
-                    );
-            }
-
-
-            lastScrollY =
-                currentScrollY;
-
-
-            setTimeout(() => {
-
-                photoScrollLocked = false;
-
-            }, 900);
-
-        },
-        { passive: true }
+    "touchstart",
+    () => {
+    touchSwapAllowed = true;
+    lastScrollY =
+    window.scrollY;
+    },
+    { passive: true }
+    );
+    }
+    const SWAP_DISTANCE =
+    isTouchDevice ? 120 : 70;
+    const SWAP_COOLDOWN =
+    isTouchDevice ? 700 : 520;
+    window.addEventListener(
+    "scroll",
+    () => {
+    const currentScrollY =
+    window.scrollY;
+    const delta =
+    currentScrollY - lastScrollY;
+    if (
+    Math.abs(delta) < SWAP_DISTANCE ||
+    photoScrollLocked ||
+    (isTouchDevice && !touchSwapAllowed)
+    ) {
+    return;
+    }
+    photoScrollLocked = true;
+    if (isTouchDevice) {
+    touchSwapAllowed = false;
+    }
+    if (delta > 0) {
+    leftIndex =
+    nextPhoto(
+    leftPhotos,
+    leftIndex,
+    "left"
+    );
+    rightIndex =
+    nextPhoto(
+    rightPhotos,
+    rightIndex,
+    "right"
+    );
+    } else {
+    leftIndex =
+    nextPhoto(
+    leftPhotos,
+    leftIndex,
+    "right"
+    );
+    rightIndex =
+    nextPhoto(
+    rightPhotos,
+    rightIndex,
+    "left"
+    );
+    }
+    lastScrollY =
+    currentScrollY;
+    setTimeout(() => {
+    photoScrollLocked = false;
+    }, SWAP_COOLDOWN);
+    },
+    { passive: true }
     );
 
 
