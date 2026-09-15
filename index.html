@@ -622,6 +622,113 @@
             transform: translateY(0);
         }
 
+
+        /* =========================
+ФОТОБУДКА ПО БОКАМ
+========================= */
+.photo-booth {
+    position: fixed;
+    inset: 0;
+    z-index: 10;
+    pointer-events: none;
+    overflow: hidden;
+}
+
+.booth-side {
+    position: absolute;
+    top: 50%;
+    width: 320px;   /* было 230px */
+    height: 390px;  /* было 285px */
+    transform: translateY(-50%);
+}
+
+.booth-left {
+    left: 20px;
+}
+
+.booth-right {
+    right: 20px;
+}
+
+.photo-stack {
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
+.booth-photo {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 260px;   /* было 185px */
+    height: 320px;  /* было 225px */
+    padding: 12px;
+    object-fit: cover;
+    object-position: center;
+    background: #fff;
+    box-shadow:
+        0 16px 40px rgba(45, 38, 30, .26),
+        0 3px 7px rgba(45, 38, 30, .14);
+    opacity: 0;
+    transform:
+        translate(-50%, -50%)
+        rotate(var(--rotation, -3deg))
+        scale(.82);
+    transition:
+        opacity .45s ease,
+        transform .65s cubic-bezier(.22,.61,.36,1);
+}
+
+.booth-photo.active {
+    opacity: 1;
+    transform:
+        translate(-50%, -50%)
+        rotate(var(--rotation, -3deg))
+        scale(1);
+}
+
+.booth-photo.exit-left {
+    opacity: 0;
+    transform:
+        translate(-155%, -125%)
+        rotate(-18deg)
+        scale(.82);
+}
+
+.booth-photo.exit-right {
+    opacity: 0;
+    transform:
+        translate(55%, -125%)
+        rotate(18deg)
+        scale(.82);
+}
+
+.booth-left .booth-photo:nth-child(1)  { --rotation: -4deg; }
+.booth-left .booth-photo:nth-child(2)  { --rotation: 3deg; }
+.booth-left .booth-photo:nth-child(3)  { --rotation: -2deg; }
+.booth-right .booth-photo:nth-child(1) { --rotation: 4deg; }
+.booth-right .booth-photo:nth-child(2) { --rotation: -3deg; }
+.booth-right .booth-photo:nth-child(3) { --rotation: 2deg; }
+
+/* На очень широком экране фотографии еще крупнее */
+@media (min-width: 1500px) {
+    .booth-side {
+        width: 390px;   /* было 280px */
+        height: 470px;  /* было 340px */
+    }
+    .booth-photo {
+        width: 310px;   /* было 220px */
+        height: 380px;  /* было 270px */
+        padding: 13px;
+    }
+    .booth-left {
+        left: 35px;
+    }
+    .booth-right {
+        right: 35px;
+    }
+}
+
         /* =========================
            MOBILE
         ========================= */
@@ -687,12 +794,127 @@
             .location-name {
                 font-size: 34px;
             }
+
+            /*
+             * ФОТОБУДКА НА МОБИЛЬНОМ:
+             * фотографии остаются по краям,
+             * но становятся компактными и не перекрывают текст.
+             */
+            .photo-booth {
+                display: block;
+            }
+
+            .booth-side {
+                width: 115px;   /* было 82px */
+                height: 155px;  /* было 120px */
+            }
+
+            .booth-left {
+                left: -10px;
+            }
+
+            .booth-right {
+                right: -10px;
+            }
+
+            .booth-photo {
+                width: 95px;    /* было 68px */
+                height: 122px;  /* было 88px */
+                padding: 6px;
+                box-shadow:
+                    0 9px 22px rgba(45, 38, 30, .22),
+                    0 2px 4px rgba(45, 38, 30, .12);
+            }
+
+            /*
+             * На узких телефонах уменьшаем еще немного,
+             * чтобы края фотографий не мешали чтению.
+             */
+            .wedding-logo {
+                width: min(430px, 82vw);
+                transform: translateX(12px);
+            }
+
+            .hero-content {
+                padding-left: 12px;
+                padding-right: 12px;
+            }
         }
 
     </style>
 </head>
 
 <body>
+
+
+<!-- ======================================
+     ФОТОБУДКА
+     Фото: images/photo1.jpg ... photo6.jpg
+======================================= -->
+
+<div class="photo-booth" aria-hidden="true">
+
+    <div class="booth-side booth-left">
+        <div class="photo-stack">
+
+            <img
+                src="images/photo1.jpg"
+                class="booth-photo"
+                alt="Елена и Федот">
+
+            <img
+                src="images/photo2.jpg"
+                class="booth-photo"
+                alt="Елена и Федот">
+
+            <img
+                src="images/photo3.jpg"
+                class="booth-photo"
+                alt="Елена и Федот">
+            <img
+                src="images/photo7.jpg"
+                class="booth-photo"
+                alt="Елена и Федот">
+            <img
+                src="images/photo8.jpg"
+                class="booth-photo"
+                alt="Елена и Федот">
+
+        </div>
+    </div>
+
+
+    <div class="booth-side booth-right">
+        <div class="photo-stack">
+
+            <img
+                src="images/photo4.jpg"
+                class="booth-photo"
+                alt="Елена и Федот">
+
+            <img
+                src="images/photo5.jpg"
+                class="booth-photo"
+                alt="Елена и Федот">
+
+            <img
+                src="images/photo6.jpg"
+                class="booth-photo"
+                alt="Елена и Федот">
+            <img
+                src="images/photo9.jpg"
+                class="booth-photo"
+                alt="Елена и Федот">
+            <img
+                src="images/photo10.jpg"
+                class="booth-photo"
+                alt="Елена и Федот">
+
+        </div>
+    </div>
+
+</div>
+
 
 
 <!-- ======================================
@@ -1378,6 +1600,152 @@ viewBox="0 0 21000 29700"
             observer.observe(element);
 
         });
+
+
+
+    /* ==================================
+       ФОТОБУДКА
+    ================================== */
+
+    const leftPhotos = document.querySelectorAll(
+        ".booth-left .booth-photo"
+    );
+
+    const rightPhotos = document.querySelectorAll(
+        ".booth-right .booth-photo"
+    );
+
+    let leftIndex = 0;
+    let rightIndex = 0;
+
+    if (leftPhotos.length) {
+        leftPhotos[0].classList.add("active");
+    }
+
+    if (rightPhotos.length) {
+        rightPhotos[0].classList.add("active");
+    }
+
+
+    function nextPhoto(photos, index, direction) {
+
+        if (!photos.length) {
+            return index;
+        }
+
+        const current = photos[index];
+
+        current.classList.remove("active");
+
+        if (direction === "left") {
+            current.classList.add("exit-left");
+        } else {
+            current.classList.add("exit-right");
+        }
+
+
+        const nextIndex =
+            (index + 1) % photos.length;
+
+        const next =
+            photos[nextIndex];
+
+
+        setTimeout(() => {
+
+            current.classList.remove(
+                "exit-left",
+                "exit-right"
+            );
+
+            next.classList.remove(
+                "exit-left",
+                "exit-right"
+            );
+
+            next.classList.add("active");
+
+        }, 90);
+
+
+        return nextIndex;
+    }
+
+
+    let lastScrollY = window.scrollY;
+    let photoScrollLocked = false;
+
+
+    window.addEventListener(
+        "scroll",
+        () => {
+
+            const currentScrollY =
+                window.scrollY;
+
+            const delta =
+                currentScrollY - lastScrollY;
+
+
+            if (
+                Math.abs(delta) < 70 ||
+                photoScrollLocked
+            ) {
+                return;
+            }
+
+
+            photoScrollLocked = true;
+
+
+            if (delta > 0) {
+
+                leftIndex =
+                    nextPhoto(
+                        leftPhotos,
+                        leftIndex,
+                        "left"
+                    );
+
+                rightIndex =
+                    nextPhoto(
+                        rightPhotos,
+                        rightIndex,
+                        "right"
+                    );
+
+            } else {
+
+                leftIndex =
+                    nextPhoto(
+                        leftPhotos,
+                        leftIndex,
+                        "right"
+                    );
+
+                rightIndex =
+                    nextPhoto(
+                        rightPhotos,
+                        rightIndex,
+                        "left"
+                    );
+            }
+
+
+            lastScrollY =
+                currentScrollY;
+
+
+            setTimeout(() => {
+
+                photoScrollLocked = false;
+
+            }, 520);
+
+        },
+        { passive: true }
+    );
+
 
 </script>
 
