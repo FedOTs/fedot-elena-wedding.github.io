@@ -1687,7 +1687,7 @@ viewBox="0 0 21000 29700"
 
 
             if (
-                Math.abs(delta) < 70 ||
+                Math.abs(delta) < 250 ||
                 photoScrollLocked
             ) {
                 return;
@@ -1739,7 +1739,7 @@ viewBox="0 0 21000 29700"
 
                 photoScrollLocked = false;
 
-            }, 520);
+            }, 900);
 
         },
         { passive: true }
