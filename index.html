@@ -736,117 +736,93 @@
     }
 }
 
-        /* =========================
-           MOBILE
-        ========================= */
-
-        @media (max-width: 600px) {
-
-            section {
-                padding: 80px 18px;
-            }
-
-            .hero::before {
-                inset: 15px;
-            }
-
-            .monogram {
-                width: 210px;
-                height: 210px;
-            }
-
-            .initials {
-                font-size: 65px;
-            }
-
-            .hero h1 {
-                font-size: 65px;
-            }
-
-            .wedding-date {
-                font-size: 24px;
-            }
-
-            .wedding-date::before,
-            .wedding-date::after {
-                width: 35px;
-            }
-
-            .timer {
-                grid-template-columns: repeat(2, 1fr);
-                gap: 35px 0;
-            }
-
-            .timer-item:nth-child(2) {
-                border-right: none;
-            }
-
-            .timeline-item {
-                grid-template-columns: 80px 1fr;
-                gap: 20px;
-            }
-
-            .timeline-time {
-                font-size: 25px;
-            }
-
-            .timeline-title {
-                font-size: 25px;
-            }
-
-            .location-card {
-                padding: 40px 20px;
-            }
-
-            .location-name {
-                font-size: 34px;
-            }
-
-            /*
-             * ФОТОБУДКА НА МОБИЛЬНОМ:
-             * фотографии остаются по краям,
-             * но становятся компактными и не перекрывают текст.
-             */
-            .photo-booth {
-                display: block;
-            }
-
-            .booth-side {
-                width: 115px;   /* было 82px */
-                height: 155px;  /* было 120px */
-            }
-
-            .booth-left {
-                left: -10px;
-            }
-
-            .booth-right {
-                right: -10px;
-            }
-
-            .booth-photo {
-                width: 95px;    /* было 68px */
-                height: 122px;  /* было 88px */
-                padding: 6px;
-                box-shadow:
-                    0 9px 22px rgba(45, 38, 30, .22),
-                    0 2px 4px rgba(45, 38, 30, .12);
-            }
-
-            /*
-             * На узких телефонах уменьшаем еще немного,
-             * чтобы края фотографий не мешали чтению.
-             */
-            .wedding-logo {
-                width: min(430px, 82vw);
-                transform: translateX(12px);
-            }
-
-            .hero-content {
-                padding-left: 12px;
-                padding-right: 12px;
-            }
-        }
+      /* =========================
+MOBILE
+========================= */
+@media (max-width: 600px) {
+    section {
+        padding: 80px 18px;
+    }
+    .hero::before {
+        inset: 15px;
+    }
+    .monogram {
+        width: 210px;
+        height: 210px;
+    }
+    .initials {
+        font-size: 65px;
+    }
+    .hero h1 {
+        font-size: 65px;
+    }
+    .wedding-date {
+        font-size: 24px;
+    }
+    .wedding-date::before,
+    .wedding-date::after {
+        width: 35px;
+    }
+    .timer {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 35px 0;
+    }
+    .timer-item:nth-child(2) {
+        border-right: none;
+    }
+    .timeline-item {
+        grid-template-columns: 80px 1fr;
+        gap: 20px;
+    }
+    .timeline-time {
+        font-size: 25px;
+    }
+    .timeline-title {
+        font-size: 25px;
+    }
+    .location-card {
+        padding: 40px 20px;
+    }
+    .location-name {
+        font-size: 34px;
+    }
+    
+    /* ======================================
+       ФОТОБУДКА НА МОБИЛЬНОМ (ОБНОВЛЕНО)
+       ====================================== */
+    .photo-booth {
+        display: block;
+    }
+    .booth-side {
+        width: 115px;
+        height: 155px;
+        top: 70px; /* Сдвигаем блок к верху экрана */
+        transform: translateY(0); /* Отменяем центрирование по вертикали, которое было на десктопе */
+    }
+    .booth-left {
+        left: -10px;
+    }
+    .booth-right {
+        right: -10px;
+    }
+    .booth-photo {
+        width: 95px;
+        height: 122px;
+        padding: 6px;
+        box-shadow:
+        0 9px 22px rgba(45, 38, 30, .22),
+        0 2px 4px rgba(45, 38, 30, .12);
+    }
+    
+    .wedding-logo {
+        width: min(430px, 82vw);
+        transform: translateX(12px);
+    }
+    .hero-content {
+        padding-left: 12px;
+        padding-right: 12px;
+    }
+}
 
     </style>
 </head>
